@@ -44,6 +44,7 @@
         )
         let data=["Simpheropol", "Sevastopol", "Kerch", "Yalta", "Alushta", "Yevpatoriya", "Feodosiya", "Djankoy"]
         let tmplist = []
+        let aci = -1
         $('.ac').on('input focus', function(e) {
             if (this.value != '') {
                 tmplist = []
@@ -55,6 +56,8 @@
                 if ((tmplist.length>0) && (tmplist[0]!=this.value)) {
                     clearAcDropUlChildren()
                     $('#acDrop').show()
+                    aci = -1
+                    $('#acDrop ul li').removeClass('selectedLi')
                 } else {
                     $('#acDrop').hide()
                 }
@@ -65,10 +68,51 @@
         })
         $('.ac').on('focusout', function(e) {
             $('#acDrop').hide() 
+            aci = -1
         })
         $('#acDrop ul li').on('mousedown', function(e) {
             $('.ac')[0].value = this.textContent
+            aci = -1
         })
+        $('.ac').on('keydown', function(e) {
+            if (e.keyCode == 38) {
+                e.preventDefault()
+                //Up
+                //alert(38)
+                if (aci<=0) {
+                    aci = tmplist.length
+                }
+                aci -= 1
+                if ((aci>-1) && (tmplist.length>0)) {
+                    $('#acDrop ul li').removeClass('selectedLi')
+                    document.getElementById('acDrop').getElementsByTagName('li')[aci].classList.add('selectedLi')
+                    //$('#acDrop ul li').addClass('selectedLi')
+                }
+            } else
+            if (e.keyCode == 40) {
+                e.preventDefault()
+                //Down
+                //alert(40)
+                if (aci>=tmplist.length - 1) {
+                    aci = -1
+                }
+                aci += 1
+                if ((aci>-1) && (tmplist.length>0)) {
+                    $('#acDrop ul li').removeClass('selectedLi')
+                    document.getElementById('acDrop').getElementsByTagName('li')[aci].classList.add('selectedLi')
+                    //$('#acDrop ul li').addClass('selectedLi')
+                }
+                
+            } else
+            if ((e.keyCode == 13) && ($('#acDrop').is(":visible") && (aci>-1) && (aci<tmplist.length)) ) {
+                e.preventDefault()
+                $('.ac')[0].value = document.getElementById('acDrop').getElementsByTagName('li')[aci].textContent
+                $('#acDrop').hide() 
+                aci = -1
+            }
+
+        })
+
         function clearAcDropUlChildren() {
             //delete all text from all ul li in the dropdown
             let children = $('#acDrop ul').children()
