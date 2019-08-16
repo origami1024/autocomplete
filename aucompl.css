@@ -20,9 +20,6 @@
     list-style: none;
     cursor: pointer;
 }
-#acDrop ul li:hover {
-    
-}
 .selectedLi{
     background-color: #4af;
     color: white;

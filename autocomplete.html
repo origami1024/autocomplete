@@ -42,7 +42,7 @@
         $(document).ready(
             $('#acDrop').hide()
         )
-        let data=["Simpheropol", "Sevastopol", "Kerch", "Yalta", "Alushta", "Yevpatoriya", "Feodosiya", "Djankoy"]
+        let data=["Simpheropol", "Sevastopol", "Kerch", "Yalta", "Alushta", "Yevpatoriya", "Feodosiya", "Djankoy", "Sudak", "Saki"]
         let tmplist = []
         let aci = -1
         $('.ac').on('input focus', function(e) {
@@ -78,7 +78,6 @@
             if (e.keyCode == 38) {
                 e.preventDefault()
                 //Up
-                //alert(38)
                 if (aci<=0) {
                     aci = tmplist.length
                 }
@@ -86,13 +85,11 @@
                 if ((aci>-1) && (tmplist.length>0)) {
                     $('#acDrop ul li').removeClass('selectedLi')
                     document.getElementById('acDrop').getElementsByTagName('li')[aci].classList.add('selectedLi')
-                    //$('#acDrop ul li').addClass('selectedLi')
                 }
             } else
             if (e.keyCode == 40) {
                 e.preventDefault()
                 //Down
-                //alert(40)
                 if (aci>=tmplist.length - 1) {
                     aci = -1
                 }
@@ -100,7 +97,6 @@
                 if ((aci>-1) && (tmplist.length>0)) {
                     $('#acDrop ul li').removeClass('selectedLi')
                     document.getElementById('acDrop').getElementsByTagName('li')[aci].classList.add('selectedLi')
-                    //$('#acDrop ul li').addClass('selectedLi')
                 }
                 
             } else
@@ -115,7 +111,6 @@
         $('#acDrop ul li').on("mousemove", function(e) {
             $('#acDrop ul li').removeClass('selectedLi')
             this.classList.add('selectedLi')
-            
             aci = [...this.parentNode.children].indexOf(this)
         })
         function clearAcDropUlChildren() {
