@@ -53,8 +53,8 @@
                         tmplist.push(val)
                     }
                 })
-                if ((tmplist.length>0) && (tmplist[0]!=this.value)) {
-                    clearAcDropUlChildren()
+                if ((tmplist.length>0) && (tmplist[0].toLowerCase()!=this.value.toLowerCase())) {
+                    clearAcDropUlChildren(this.value)
                     $('#acDrop').show()
                     aci = -1
                     $('#acDrop ul li').removeClass('selectedLi')
@@ -113,14 +113,21 @@
             this.classList.add('selectedLi')
             aci = [...this.parentNode.children].indexOf(this)
         })
-        function clearAcDropUlChildren() {
+
+        function clearAcDropUlChildren(sub) {
             //delete all text from all ul li in the dropdown
             let children = $('#acDrop ul').children()
             for (let index = 0; index < children.length; index++) {
-                if (tmplist.length>=index) {
-                    children[index].textContent = tmplist[index]
+                if (tmplist.length>index) {
+                    var i1 = tmplist[index].toLowerCase().indexOf(sub.toLowerCase())
+                    if (i1 == 0) {
+                        sub = sub.charAt(0).toUpperCase() + sub.slice(1)
+                    } else {
+                        sub = sub.toLowerCase()
+                    }
+                    children[index].innerHTML = `${tmplist[index].slice(0, i1)}<strong>${sub}</strong>${tmplist[index].slice(i1+sub.length)}`
                 } else {
-                    children[index].textContent = ''
+                    children[index].innerHTML = ''
                 } 
             }
         }
