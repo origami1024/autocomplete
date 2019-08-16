@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap" rel="stylesheet">
+    <link href="aucompl.css" rel="stylesheet">
+
+</head>
+<body style="font-family: 'Lexend Exa', sans-serif;">
+    <div class="container">
+        <form class="form1" action="" style="display:flex; padding: 10px; border: 1px dotted;">
+            <div class="autocomplete">
+                <input id="myInput" type="text" class="ac form-control" name="myCountry1" placeholder="City" style="line-height: 30px; padding:3px 10px;">
+            </div>
+            <input class="btn btn-primary mx-2" type="submit">
+            <div id="acDrop">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <small class="form-text text-muted" style="line-height:30px">
+                Enter the city
+            </small>
+        </form>
+    </div>
+
+    
+    <script>
+        $(document).ready(
+            $('#acDrop').hide()
+        )
+        let data=["Simpheropol", "Sevastopol", "Kerch", "Yalta", "Alushta", "Yevpatoriya", "Feodosiya", "Djankoy"]
+        let tmplist = []
+        $('.ac').on('input focus', function(e) {
+            if (this.value != '') {
+                tmplist = []
+                data.forEach(val=>{
+                    if (val.toLowerCase().includes(this.value.toLowerCase())) {
+                        tmplist.push(val)
+                    }
+                })
+                if ((tmplist.length>0) && (tmplist[0]!=this.value)) {
+                    clearAcDropUlChildren()
+                    $('#acDrop').show()
+                } else {
+                    $('#acDrop').hide()
+                }
+                
+            } else {
+                $('#acDrop').hide()
+            }
+        })
+        $('.ac').on('focusout', function(e) {
+            $('#acDrop').hide() 
+        })
+        $('#acDrop ul li').on('mousedown', function(e) {
+            $('.ac')[0].value = this.textContent
+        })
+        function clearAcDropUlChildren() {
+            //delete all text from all ul li in the dropdown
+            let children = $('#acDrop ul').children()
+            for (let index = 0; index < children.length; index++) {
+                if (tmplist.length>=index) {
+                    children[index].textContent = tmplist[index]
+                } else {
+                    children[index].textContent = ''
+                } 
+            }
+        }
+    </script>
+</body>
+</html>
