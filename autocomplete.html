@@ -112,7 +112,12 @@
             }
 
         })
-
+        $('#acDrop ul li').on("mousemove", function(e) {
+            $('#acDrop ul li').removeClass('selectedLi')
+            this.classList.add('selectedLi')
+            
+            aci = [...this.parentNode.children].indexOf(this)
+        })
         function clearAcDropUlChildren() {
             //delete all text from all ul li in the dropdown
             let children = $('#acDrop ul').children()
